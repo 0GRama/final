@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Final</title>
+</head>
+<body style="background:black;color:white;display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial;">
+<h1>Congratulations.</h1>
+</body>
+</html>
