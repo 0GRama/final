@@ -96,6 +96,10 @@ opacity:1;
 <div id="imageBox"></div>
 <div id="footer">Love, Ramil</div>
 </div>
+
+<!-- 🎵 фоновая музыка -->
+<audio id="bgMusic" src="ost%20code.wav" autoplay loop></audio>
+
 <script>
 const lines = [
 "Thank you for solving this puzzle.",
@@ -108,6 +112,29 @@ const lines = [
 ];
 const lineDelay = 3400; // одинаковая задержка между всеми строками (мс)
 const textEl = document.getElementById("text");
+
+// 🎵 запуск музыки с обходом блокировки автовоспроизведения браузером
+const music = document.getElementById("bgMusic");
+music.volume = 0.6;
+function tryPlayMusic(){
+    const playPromise = music.play();
+    if(playPromise !== undefined){
+        playPromise.catch(() => {
+            // браузер заблокировал автозапуск — запустим при первом клике/касании
+            const startOnInteraction = () => {
+                music.play();
+                document.removeEventListener("click", startOnInteraction);
+                document.removeEventListener("keydown", startOnInteraction);
+                document.removeEventListener("touchstart", startOnInteraction);
+            };
+            document.addEventListener("click", startOnInteraction);
+            document.addEventListener("keydown", startOnInteraction);
+            document.addEventListener("touchstart", startOnInteraction);
+        });
+    }
+}
+tryPlayMusic();
+
 function showLines(index){
     if(index < lines.length){
         const div = document.createElement("div");
