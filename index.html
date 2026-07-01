@@ -45,9 +45,8 @@ margin:12px 0;
 .line.show{
 opacity:1;
 }
-/* 📦 зона под изображение, без отступа */
+/* 📦 зона под изображение, без отступа и без лишней высоты */
 #imageBox{
-min-height: 380px;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -66,7 +65,7 @@ opacity:1;
 }
 /* 👋 финальная подпись */
 #footer{
-margin-top:0;
+margin-top:10px;
 font-size:15px;
 opacity:0;
 transition:opacity 3s ease;
@@ -95,45 +94,4 @@ const lines = [
 "I hope this little adventure was enjoyable and worth your time.",
 "There are no more ciphers, riddles, or hidden clues left to find.",
 "You've discovered everything there was to discover.",
-"Thank you for being part of this little adventure.",
-"As a small token of my appreciation, here's a photo of my kitten."
-];
-
-const lineDelay = 900; // задержка между появлением строк (мс)
-const textEl = document.getElementById("text");
-
-function showLines(index){
-    if(index < lines.length){
-        const div = document.createElement("div");
-        div.className = "line";
-        div.textContent = lines[index];
-        textEl.appendChild(div);
-        setTimeout(() => {
-            div.classList.add("show");
-        }, 50);
-        setTimeout(() => showLines(index + 1), lineDelay);
-    } else {
-        setTimeout(showFinal, 800);
-    }
-}
-
-function showFinal(){
-    // 🐱 создаём котёнка внутри фиксированного блока
-    const img = document.createElement("img");
-    img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
-    img.id = "kitty";
-    document.getElementById("imageBox").appendChild(img);
-    // плавное появление
-    setTimeout(() => {
-        img.classList.add("show");
-    }, 100);
-    // 👋 подпись появляется только после котёнка
-    setTimeout(() => {
-        document.getElementById("footer").classList.add("show");
-    }, 2500);
-}
-
-setTimeout(() => showLines(0), 2500);
-</script>
-</body>
-</html>
+"Thank you for
