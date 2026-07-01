@@ -33,19 +33,25 @@ letter-spacing:5px;
 margin-bottom:40px;
 color:#6eff8b;
 }
-p{
+#text{
 font-size:22px;
 line-height:1.8;
-margin:12px 0;
-white-space:pre-line;
 }
-/* 📦 фиксированная зона под изображение */
+.line{
+opacity:0;
+transition:opacity 1.8s ease;
+margin:12px 0;
+}
+.line.show{
+opacity:1;
+}
+/* 📦 зона под изображение, без отступа */
 #imageBox{
 min-height: 380px;
 display:flex;
 justify-content:center;
 align-items:center;
-margin-top:45px;
+margin-top:0;
 }
 /* 🐱 котёнок */
 #kitty{
@@ -60,7 +66,7 @@ opacity:1;
 }
 /* 👋 финальная подпись */
 #footer{
-margin-top:10px;
+margin-top:0;
 font-size:15px;
 opacity:0;
 transition:opacity 3s ease;
@@ -77,31 +83,41 @@ opacity:1;
 </head>
 <body>
 <div id="container">
-<h1>The End</h1>
-<p id="text"></p>
+<h1>ACCESS GRANTED</h1>
+<div id="text"></div>
 <div id="imageBox"></div>
 <div id="footer">Love, Ramil</div>
 </div>
 <script>
-const message = `Thank you for solving this puzzle.
-If you're reading this, it means you've made it all the way to the end.
-I hope this little adventure was enjoyable and worth your time.
-There are no more ciphers, riddles, or hidden clues left to find.
-You've discovered everything there was to discover.
-Thank you for being part of this little adventure.
-As a small token of my appreciation, here's a photo of my kitten.
-`;
-let i = 0;
-const speed = 35;
-function type(){
-    if(i < message.length){
-        document.getElementById("text").innerHTML += message[i];
-        i++;
-        setTimeout(type, speed);
+const lines = [
+"# The End",
+"Thank you for solving this puzzle.",
+"If you're reading this, it means you've made it all the way to the end.",
+"I hope this little adventure was enjoyable and worth your time.",
+"There are no more ciphers, riddles, or hidden clues left to find.",
+"You've discovered everything there was to discover.",
+"Thank you for being part of this little adventure.",
+"As a small token of my appreciation, here's a photo of my kitten."
+];
+
+const lineDelay = 900; // задержка между появлением строк (мс)
+const textEl = document.getElementById("text");
+
+function showLines(index){
+    if(index < lines.length){
+        const div = document.createElement("div");
+        div.className = "line";
+        div.textContent = lines[index];
+        textEl.appendChild(div);
+        setTimeout(() => {
+            div.classList.add("show");
+        }, 50);
+        setTimeout(() => showLines(index + 1), lineDelay);
     } else {
         setTimeout(showFinal, 800);
     }
 }
+
 function showFinal(){
     // 🐱 создаём котёнка внутри фиксированного блока
     const img = document.createElement("img");
@@ -117,7 +133,8 @@ function showFinal(){
         document.getElementById("footer").classList.add("show");
     }, 2500);
 }
-setTimeout(type, 2500);
+
+setTimeout(() => showLines(0), 2500);
 </script>
 </body>
 </html>
