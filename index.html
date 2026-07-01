@@ -27,6 +27,7 @@ opacity:0;
 animation:fade 2s forwards;
 animation-delay:1.5s;
 margin-top:10vh;
+padding-bottom:40px;
 }
 h1{
 font-size:42px;
@@ -39,8 +40,112 @@ font-size:22px;
 line-height:1.8;
 }
 .line{
-display:grid;
-grid-template-rows:0fr;
 opacity:0;
+max-height:0;
 overflow:hidden;
-transition:grid-t
+margin:0;
+transition:opacity 1.6s ease, max-height 1.6s ease, margin 1.6s ease;
+}
+.line.show{
+opacity:1;
+max-height:120px;
+margin:12px 0;
+}
+/* 📦 зона под изображение */
+#imageBox{
+max-height:0;
+overflow:hidden;
+display:flex;
+justify-content:center;
+transition:max-height 1.6s ease;
+}
+#imageBox.show{
+max-height:420px;
+}
+/* 🐱 котёнок */
+#kitty{
+width:320px;
+border-radius:18px;
+box-shadow:0 0 30px rgba(255,255,255,.15);
+opacity:0;
+margin-top:10px;
+transition:opacity 2s ease;
+}
+#kitty.show{
+opacity:1;
+}
+/* 👋 финальная подпись */
+#footer{
+margin-top:10px;
+font-size:15px;
+opacity:0;
+transition:opacity 3s ease;
+}
+#footer.show{
+opacity:.5;
+}
+@keyframes fade{
+to{
+opacity:1;
+}
+}
+</style>
+</head>
+<body>
+<div id="container">
+<h1>The End</h1>
+<div id="text"></div>
+<div id="imageBox"></div>
+<div id="footer">Love, Ramil</div>
+</div>
+<script>
+const lines = [
+"Thank you for solving this puzzle.",
+"If you're reading this, it means you've made it all the way to the end.",
+"I hope this little adventure was enjoyable and worth your time.",
+"There are no more ciphers, riddles, or hidden clues left to find.",
+"You've discovered everything there was to discover.",
+"Thank you for being part of this little adventure.",
+"As a small token of my appreciation, here's a photo of my kitten."
+];
+const lineDelay = 3400; // одинаковая задержка между всеми строками (мс)
+const textEl = document.getElementById("text");
+function showLines(index){
+    if(index < lines.length){
+        const div = document.createElement("div");
+        div.className = "line";
+        div.textContent = lines[index];
+        textEl.appendChild(div);
+        setTimeout(() => {
+            div.classList.add("show");
+        }, 50);
+        setTimeout(() => showLines(index + 1), lineDelay);
+    } else {
+        setTimeout(showFinal, 300);
+    }
+}
+function showFinal(){
+    const imageBox = document.getElementById("imageBox");
+    // 🐱 создаём котёнка внутри блока
+    const img = document.createElement("img");
+    img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
+    img.id = "kitty";
+    imageBox.appendChild(img);
+    // плавно раскрываем зону под фото
+    setTimeout(() => {
+        imageBox.classList.add("show");
+    }, 50);
+    // само фото проявляется, пока раскрывается зона
+    setTimeout(() => {
+        img.classList.add("show");
+    }, 400);
+    // 👋 подпись появляется только после котёнка
+    setTimeout(() => {
+        document.getElementById("footer").classList.add("show");
+    }, 2200);
+}
+// сначала полностью появляется заголовок The End (3.5s), затем держим паузу подольше, и только после этого начинаем показывать текст
+setTimeout(() => showLines(0), 6000);
+</script>
+</body>
+</html>
