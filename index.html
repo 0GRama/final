@@ -97,10 +97,38 @@ const lines = [
 "Thank you for being part of this little adventure.",
 "As a small token of my appreciation, here's a photo of my kitten."
 ];
-
-const lineDelay = 3400; // задержка между строками (мс)
+const lineDelay = 3400; // одинаковая задержка между всеми строками (мс)
 const textEl = document.getElementById("text");
-
 function showLines(index){
     if(index < lines.length){
-        const div =
+        const div = document.createElement("div");
+        div.className = "line";
+        div.textContent = lines[index];
+        textEl.appendChild(div);
+        setTimeout(() => {
+            div.classList.add("show");
+        }, 50);
+        setTimeout(() => showLines(index + 1), lineDelay);
+    } else {
+        setTimeout(showFinal, 800);
+    }
+}
+function showFinal(){
+    // 🐱 создаём котёнка внутри блока
+    const img = document.createElement("img");
+    img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
+    img.id = "kitty";
+    document.getElementById("imageBox").appendChild(img);
+    setTimeout(() => {
+        img.classList.add("show");
+    }, 100);
+    // 👋 подпись появляется только после котёнка
+    setTimeout(() => {
+        document.getElementById("footer").classList.add("show");
+    }, 2500);
+}
+// запускаем показ строк только после того как контейнер полностью появился (1.5s delay + 2s анимация = 3.5s)
+setTimeout(() => showLines(0), 3500);
+</script>
+</body>
+</html>
