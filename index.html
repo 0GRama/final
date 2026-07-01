@@ -3,15 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>End of the Journey</title>
-
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 }
-
 body{
 background:#000;
 color:#fff;
@@ -22,7 +19,6 @@ align-items:center;
 min-height:100vh;
 overflow:hidden;
 }
-
 #container{
 width:900px;
 max-width:90%;
@@ -31,21 +27,18 @@ opacity:0;
 animation:fade 2s forwards;
 animation-delay:1.5s;
 }
-
 h1{
 font-size:42px;
 letter-spacing:5px;
 margin-bottom:40px;
 color:#6eff8b;
 }
-
 p{
 font-size:22px;
 line-height:1.8;
 margin:12px 0;
 white-space:pre-line;
 }
-
 /* 📦 фиксированная зона под изображение */
 #imageBox{
 min-height: 380px;
@@ -54,7 +47,6 @@ justify-content:center;
 align-items:center;
 margin-top:45px;
 }
-
 /* 🐱 котёнок */
 #kitty{
 width:320px;
@@ -63,50 +55,36 @@ box-shadow:0 0 30px rgba(255,255,255,.15);
 opacity:0;
 transition:opacity 3s ease;
 }
-
 #kitty.show{
 opacity:1;
 }
-
 /* 👋 финальная подпись */
 #footer{
-margin-top:35px;
+margin-top:10px;
 font-size:15px;
 opacity:0;
 transition:opacity 3s ease;
 }
-
 #footer.show{
 opacity:.5;
 }
-
 @keyframes fade{
 to{
 opacity:1;
 }
 }
-
 </style>
-
 </head>
-
 <body>
-
 <div id="container">
-
-<h1>The End</h1>
-
+<h1>ACCESS GRANTED</h1>
 <p id="text"></p>
-
 <div id="imageBox"></div>
-
 <div id="footer">Love, Ramil</div>
-
 </div>
-
 <script>
-
-const message = `Thank you for solving this puzzle.
+const message = `# The End
+Thank you for solving this puzzle.
 If you're reading this, it means you've made it all the way to the end.
 I hope this little adventure was enjoyable and worth your time.
 There are no more ciphers, riddles, or hidden clues left to find.
@@ -114,10 +92,8 @@ You've discovered everything there was to discover.
 Thank you for being part of this little adventure.
 As a small token of my appreciation, here's a photo of my kitten.
 `;
-
 let i = 0;
 const speed = 35;
-
 function type(){
     if(i < message.length){
         document.getElementById("text").innerHTML += message[i];
@@ -127,30 +103,22 @@ function type(){
         setTimeout(showFinal, 800);
     }
 }
-
 function showFinal(){
-
     // 🐱 создаём котёнка внутри фиксированного блока
     const img = document.createElement("img");
     img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
     img.id = "kitty";
-
     document.getElementById("imageBox").appendChild(img);
-
     // плавное появление
     setTimeout(() => {
         img.classList.add("show");
     }, 100);
-
     // 👋 подпись появляется только после котёнка
     setTimeout(() => {
         document.getElementById("footer").classList.add("show");
     }, 2500);
 }
-
 setTimeout(type, 2500);
-
 </script>
-
 </body>
 </html>
