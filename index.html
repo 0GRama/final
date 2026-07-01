@@ -15,9 +15,9 @@ color:#fff;
 font-family:Consolas,monospace;
 display:flex;
 justify-content:center;
-align-items:flex-start;
+align-items:center;
 min-height:100vh;
-overflow-x:hidden;
+overflow:hidden;
 }
 #container{
 width:900px;
@@ -26,8 +26,6 @@ text-align:center;
 opacity:0;
 animation:fade 2s forwards;
 animation-delay:1.5s;
-margin-top:12vh;
-padding-bottom:60px;
 }
 h1{
 font-size:42px;
@@ -44,23 +42,23 @@ opacity:0;
 max-height:0;
 overflow:hidden;
 margin:0 0;
-transition:opacity 2.4s ease, max-height 2.4s ease, margin 2.4s ease;
+transition:opacity 1.8s ease, max-height 1.8s ease, margin 1.8s ease;
 }
 .line.show{
 opacity:1;
-max-height:100px;
+max-height:80px;
 margin:12px 0;
 }
-/* 📦 зона под изображение, плавно раскрывается */
+/* 📦 зона под изображение — плавно раскрывается, чтобы не дёргать текст */
 #imageBox{
 max-height:0;
 overflow:hidden;
 display:flex;
 justify-content:center;
-transition:max-height 3.2s ease;
+transition:max-height 3s ease;
 }
 #imageBox.show{
-max-height:420px;
+max-height:400px;
 }
 /* 🐱 котёнок */
 #kitty{
@@ -69,7 +67,7 @@ border-radius:18px;
 box-shadow:0 0 30px rgba(255,255,255,.15);
 opacity:0;
 margin-top:10px;
-transition:opacity 2.8s ease;
+transition:opacity 2.5s ease;
 }
 #kitty.show{
 opacity:1;
@@ -135,14 +133,14 @@ function showFinal(){
     setTimeout(() => {
         imageBox.classList.add("show");
     }, 50);
-    // и только когда зона уже почти раскрылась, начинает проявляться само фото
+    // само фото проявляется чуть позже, пока раскрывается зона
     setTimeout(() => {
         img.classList.add("show");
-    }, 1200);
+    }, 900);
     // 👋 подпись появляется только после котёнка
     setTimeout(() => {
         document.getElementById("footer").classList.add("show");
-    }, 3800);
+    }, 3500);
 }
 // сначала полностью появляется заголовок The End (3.5s), затем держим паузу подольше, и только после этого начинаем показывать текст
 setTimeout(() => showLines(0), 6000);
