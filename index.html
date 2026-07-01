@@ -82,18 +82,6 @@ transition:opacity 3s ease;
 #footer.show{
 opacity:.5;
 }
-/* 🔈 подсказка о звуке */
-#soundHint{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-font-size:13px;
-opacity:.6;
-letter-spacing:1px;
-cursor:pointer;
-display:none;
-}
 @keyframes fade{
 to{
 opacity:1;
@@ -108,8 +96,6 @@ opacity:1;
 <div id="imageBox"></div>
 <div id="footer">Love, Ramil</div>
 </div>
-
-<div id="soundHint">🔈 нажмите, чтобы включить звук</div>
 
 <!-- 🎵 фоновая музыка -->
 <audio id="bgMusic" src="ost%20code.wav" loop></audio>
@@ -129,27 +115,20 @@ const textEl = document.getElementById("text");
 
 // 🎵 запуск музыки с обходом блокировки автовоспроизведения браузером
 const music = document.getElementById("bgMusic");
-const hint = document.getElementById("soundHint");
 music.volume = 0.6;
 
 function tryPlayMusic(){
     const playPromise = music.play();
     if(playPromise !== undefined){
-        playPromise.then(() => {
-            hint.style.display = "none";
-        }).catch(() => {
-            // браузер заблокировал автозапуск — покажем подсказку
-            hint.style.display = "block";
-
-            // только настоящие пользовательские жесты (mousemove/scroll НЕ считаются жестом
-            // и могут преждевременно "сжечь" попытку запуска без реального разрешения браузера)
+        playPromise.catch(() => {
+            // браузер заблокировал автозапуск — запустим незаметно при первом
+            // настоящем взаимодействии пользователя со страницей
             const events = ["click", "keydown", "touchstart", "pointerdown"];
             const startOnInteraction = () => {
                 music.play().then(() => {
-                    hint.style.display = "none";
                     events.forEach(e => document.removeEventListener(e, startOnInteraction));
                 }).catch(() => {
-                    // если всё ещё не удалось (редкий случай) — оставляем слушатели активными
+                    // если всё ещё не удалось — слушатели остаются активными
                 });
             };
             events.forEach(e => document.addEventListener(e, startOnInteraction));
