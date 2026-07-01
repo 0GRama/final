@@ -119,7 +119,7 @@ opacity:.5;
 </div>
 
 <!-- 🎵 фоновая музыка -->
-<audio id="bgMusic" src="ost%20code.wav" loop></audio>
+<audio id="bgMusic" src="ost%20code.wav" loop preload="auto"></audio>
 
 <script>
 const lines = [
@@ -138,13 +138,14 @@ const heading = document.getElementById("heading");
 const music = document.getElementById("bgMusic");
 music.volume = 0.6;
 
-// 🚀 экран — это одна большая кнопка. При нажатии рамка гаснет,
-// появляется надпись "The End" и запускается музыка + анимация
+// 🚀 экран — это одна большая кнопка. При нажатии музыка стартует
+// первой же строкой (минимальная задержка), затем гаснет рамка,
+// появляется надпись "The End" и запускается анимация текста
 screenBtn.addEventListener("click", () => {
-    screenBtn.classList.add("started"); // рамка по краям экрана плавно пропадает
     music.play().catch(() => {
         // если по какой-то причине не удалось — просто продолжаем без звука
     });
+    screenBtn.classList.add("started"); // рамка по краям экрана плавно пропадает
     setTimeout(() => {
         heading.classList.add("show"); // появляется надпись The End
     }, 300);
