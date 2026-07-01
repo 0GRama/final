@@ -43,40 +43,36 @@ p{
 font-size:22px;
 line-height:1.8;
 margin:12px 0;
+white-space:pre-line;
 }
 
-img{
+#kitty{
 width:320px;
 border-radius:18px;
 margin-top:45px;
 box-shadow:0 0 30px rgba(255,255,255,.15);
 opacity:0;
-animation:fade 2s forwards;
-animation-delay:12s;
+transition:opacity 3s ease;
+}
+
+#kitty.show{
+opacity:1;
 }
 
 #footer{
 margin-top:35px;
 font-size:15px;
+opacity:0;
+transition:opacity 3s ease;
+}
+
+#footer.show{
 opacity:.5;
 }
 
 @keyframes fade{
 to{
 opacity:1;
-}
-}
-
-.cursor{
-display:inline-block;
-width:10px;
-background:white;
-animation:blink .8s infinite;
-}
-
-@keyframes blink{
-50%{
-opacity:0;
 }
 }
 
@@ -88,23 +84,19 @@ opacity:0;
 
 <div id="container">
 
-<h1>The End</h1>
+<h1>ACCESS GRANTED</h1>
 
 <p id="text"></p>
 
-<img src="IPC_2026-05-21.19.09.03.1320.jpg">
-
-<div id="footer">
-
-Love, Ramil
-
-</div>
+<div id="footer">Love, Ramil</div>
 
 </div>
 
 <script>
 
-const message=`Thank you for solving this puzzle.
+const message = `# The End
+
+Thank you for solving this puzzle.
 
 If you're reading this, it means you've made it all the way to the end.
 
@@ -119,23 +111,40 @@ Thank you for being part of this little adventure.
 As a small token of my appreciation, here's a photo of my kitten.
 `;
 
-let i=0;
+let i = 0;
+const speed = 35;
 
 function type(){
-
-if(i<message.length){
-
-document.getElementById("text").innerHTML+=message.charAt(i);
-
-i++;
-
-setTimeout(type,35);
-
+    if(i < message.length){
+        document.getElementById("text").innerHTML += message[i];
+        i++;
+        setTimeout(type, speed);
+    } else {
+        // даём маленькую паузу после печати
+        setTimeout(showFinal, 800);
+    }
 }
 
+function showFinal(){
+
+    // 1. котёнок плавно появляется
+    const img = document.createElement("img");
+    img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
+    img.id = "kitty";
+
+    document.getElementById("container").appendChild(img);
+
+    setTimeout(() => {
+        img.classList.add("show");
+    }, 100);
+
+    // 2. footer появляется ПОСЛЕ котёнка
+    setTimeout(() => {
+        document.getElementById("footer").classList.add("show");
+    }, 2500);
 }
 
-setTimeout(type,2500);
+setTimeout(type, 2500);
 
 </script>
 
