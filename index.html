@@ -46,10 +46,19 @@ margin:12px 0;
 white-space:pre-line;
 }
 
+/* 📦 фиксированная зона под изображение */
+#imageBox{
+min-height: 380px;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:45px;
+}
+
+/* 🐱 котёнок */
 #kitty{
 width:320px;
 border-radius:18px;
-margin-top:45px;
 box-shadow:0 0 30px rgba(255,255,255,.15);
 opacity:0;
 transition:opacity 3s ease;
@@ -59,6 +68,7 @@ transition:opacity 3s ease;
 opacity:1;
 }
 
+/* 👋 финальная подпись */
 #footer{
 margin-top:35px;
 font-size:15px;
@@ -84,9 +94,11 @@ opacity:1;
 
 <div id="container">
 
-<h1>The End</h1>
+<h1>ACCESS GRANTED</h1>
 
 <p id="text"></p>
+
+<div id="imageBox"></div>
 
 <div id="footer">Love, Ramil</div>
 
@@ -94,12 +106,20 @@ opacity:1;
 
 <script>
 
-const message = `Thank you for solving this puzzle.
+const message = `# The End
+
+Thank you for solving this puzzle.
+
 If you're reading this, it means you've made it all the way to the end.
+
 I hope this little adventure was enjoyable and worth your time.
+
 There are no more ciphers, riddles, or hidden clues left to find.
+
 You've discovered everything there was to discover.
+
 Thank you for being part of this little adventure.
+
 As a small token of my appreciation, here's a photo of my kitten.
 `;
 
@@ -112,25 +132,25 @@ function type(){
         i++;
         setTimeout(type, speed);
     } else {
-        // даём маленькую паузу после печати
         setTimeout(showFinal, 800);
     }
 }
 
 function showFinal(){
 
-    // 1. котёнок плавно появляется
+    // 🐱 создаём котёнка внутри фиксированного блока
     const img = document.createElement("img");
     img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
     img.id = "kitty";
 
-    document.getElementById("container").appendChild(img);
+    document.getElementById("imageBox").appendChild(img);
 
+    // плавное появление
     setTimeout(() => {
         img.classList.add("show");
     }, 100);
 
-    // 2. footer появляется ПОСЛЕ котёнка
+    // 👋 подпись появляется только после котёнка
     setTimeout(() => {
         document.getElementById("footer").classList.add("show");
     }, 2500);
