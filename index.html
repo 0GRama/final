@@ -15,9 +15,9 @@ color:#fff;
 font-family:Consolas,monospace;
 display:flex;
 justify-content:center;
-align-items:center;
+align-items:flex-start;
 min-height:100vh;
-overflow:hidden;
+overflow-x:hidden;
 }
 #container{
 width:900px;
@@ -26,6 +26,8 @@ text-align:center;
 opacity:0;
 animation:fade 2s forwards;
 animation-delay:1.5s;
+margin-top:12vh;
+padding-bottom:60px;
 }
 h1{
 font-size:42px;
@@ -42,19 +44,23 @@ opacity:0;
 max-height:0;
 overflow:hidden;
 margin:0 0;
-transition:opacity 1.8s ease, max-height 1.8s ease, margin 1.8s ease;
+transition:opacity 2.4s ease, max-height 2.4s ease, margin 2.4s ease;
 }
 .line.show{
 opacity:1;
-max-height:80px;
+max-height:100px;
 margin:12px 0;
 }
-/* 📦 зона под изображение, без лишней высоты */
+/* 📦 зона под изображение, плавно раскрывается */
 #imageBox{
+max-height:0;
+overflow:hidden;
 display:flex;
 justify-content:center;
-align-items:center;
-margin-top:0;
+transition:max-height 3.2s ease;
+}
+#imageBox.show{
+max-height:420px;
 }
 /* 🐱 котёнок */
 #kitty{
@@ -62,7 +68,8 @@ width:320px;
 border-radius:18px;
 box-shadow:0 0 30px rgba(255,255,255,.15);
 opacity:0;
-transition:opacity 3s ease;
+margin-top:10px;
+transition:opacity 2.8s ease;
 }
 #kitty.show{
 opacity:1;
@@ -118,18 +125,24 @@ function showLines(index){
     }
 }
 function showFinal(){
-    // 🐱 создаём котёнка внутри блока — появляется почти сразу после последней фразы
+    const imageBox = document.getElementById("imageBox");
+    // 🐱 создаём котёнка внутри блока
     const img = document.createElement("img");
     img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
     img.id = "kitty";
-    document.getElementById("imageBox").appendChild(img);
+    imageBox.appendChild(img);
+    // сначала плавно раскрываем саму зону под фото
+    setTimeout(() => {
+        imageBox.classList.add("show");
+    }, 50);
+    // и только когда зона уже почти раскрылась, начинает проявляться само фото
     setTimeout(() => {
         img.classList.add("show");
-    }, 50);
+    }, 1200);
     // 👋 подпись появляется только после котёнка
     setTimeout(() => {
         document.getElementById("footer").classList.add("show");
-    }, 2500);
+    }, 3800);
 }
 // сначала полностью появляется заголовок The End (3.5s), затем держим паузу подольше, и только после этого начинаем показывать текст
 setTimeout(() => showLines(0), 6000);
