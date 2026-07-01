@@ -9,6 +9,10 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 }
+html,body{
+width:100%;
+height:100%;
+}
 body{
 background:#000;
 color:#fff;
@@ -18,36 +22,40 @@ justify-content:center;
 align-items:center;
 min-height:100vh;
 overflow:hidden;
+position:relative;
+}
+/* 🖥️ весь экран — это одна большая кнопка */
+#screenBtn{
+position:fixed;
+inset:14px;
+border:1px solid rgba(110,255,139,.5);
+border-radius:16px;
+box-shadow:0 0 40px rgba(110,255,139,.12) inset;
+cursor:pointer;
+transition:border-color 1.5s ease, box-shadow 1.5s ease;
+z-index:10;
+background:none;
+}
+#screenBtn.started{
+pointer-events:none;
+border-color:transparent;
+box-shadow:none;
 }
 #container{
 width:900px;
 max-width:90%;
 text-align:center;
 }
-#startBtn{
-display:inline-block;
+h1{
 font-size:42px;
 letter-spacing:5px;
 margin-bottom:40px;
 color:#6eff8b;
-background:none;
-border:1px solid rgba(110,255,139,.5);
-border-radius:8px;
-padding:12px 28px;
-font-family:inherit;
-cursor:pointer;
-transition:border-color 1.5s ease, box-shadow 1.5s ease;
-box-shadow:0 0 15px rgba(110,255,139,.15);
+opacity:0;
+transition:opacity 1.8s ease;
 }
-#startBtn:hover{
-border-color:rgba(110,255,139,.9);
-box-shadow:0 0 20px rgba(110,255,139,.3);
-}
-#startBtn.started{
-cursor:default;
-pointer-events:none;
-border-color:transparent;
-box-shadow:none;
+h1.show{
+opacity:1;
 }
 #text{
 font-size:22px;
@@ -101,8 +109,10 @@ opacity:.5;
 </style>
 </head>
 <body>
+<button id="screenBtn" aria-label="Start"></button>
+
 <div id="container">
-<button id="startBtn">The End</button>
+<h1 id="heading">The End</h1>
 <div id="text"></div>
 <div id="imageBox"></div>
 <div id="footer">Love, Ramil</div>
@@ -123,17 +133,22 @@ const lines = [
 ];
 const lineDelay = 3400; // одинаковая задержка между всеми строками (мс)
 const textEl = document.getElementById("text");
-const startBtn = document.getElementById("startBtn");
+const screenBtn = document.getElementById("screenBtn");
+const heading = document.getElementById("heading");
 const music = document.getElementById("bgMusic");
 music.volume = 0.6;
 
-// 🚀 всё начинается только по нажатию на кнопку "The End"
-startBtn.addEventListener("click", () => {
-    startBtn.classList.add("started"); // обводка плавно пропадает (transition на border-color/box-shadow)
+// 🚀 экран — это одна большая кнопка. При нажатии рамка гаснет,
+// появляется надпись "The End" и запускается музыка + анимация
+screenBtn.addEventListener("click", () => {
+    screenBtn.classList.add("started"); // рамка по краям экрана плавно пропадает
     music.play().catch(() => {
         // если по какой-то причине не удалось — просто продолжаем без звука
     });
-    setTimeout(() => showLines(0), 500);
+    setTimeout(() => {
+        heading.classList.add("show"); // появляется надпись The End
+    }, 300);
+    setTimeout(() => showLines(0), 2100);
 }, { once: true });
 
 function showLines(index){
