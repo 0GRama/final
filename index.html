@@ -127,8 +127,8 @@ function showFinal(){
         document.getElementById("footer").classList.add("show");
     }, 2500);
 }
-// запускаем показ строк только после того как контейнер полностью появился (1.5s delay + 2s анимация = 3.5s)
-setTimeout(() => showLines(0), 3500);
+// сначала полностью появляется заголовок The End (3.5s), затем держим паузу подольше, и только после этого начинаем показывать текст
+setTimeout(() => showLines(0), 6000);
 </script>
 </body>
 </html>
