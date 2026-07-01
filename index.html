@@ -25,27 +25,29 @@ max-width:90%;
 text-align:center;
 }
 h1{
+display:inline-block;
 font-size:42px;
 letter-spacing:5px;
 margin-bottom:40px;
 color:#6eff8b;
 background:none;
-border:none;
+border:1px solid rgba(110,255,139,.5);
+border-radius:8px;
+padding:12px 28px;
 font-family:inherit;
 cursor:pointer;
-transition:opacity .3s ease, transform .3s ease;
+transition:border-color 1.5s ease, box-shadow 1.5s ease;
+box-shadow:0 0 15px rgba(110,255,139,.15);
 }
 h1:hover{
-opacity:.8;
-transform:scale(1.03);
+border-color:rgba(110,255,139,.9);
+box-shadow:0 0 20px rgba(110,255,139,.3);
 }
 h1.started{
 cursor:default;
 pointer-events:none;
-}
-h1.started:hover{
-opacity:1;
-transform:none;
+border-color:transparent;
+box-shadow:none;
 }
 #text{
 font-size:22px;
@@ -127,7 +129,7 @@ music.volume = 0.6;
 
 // 🚀 всё начинается только по нажатию на кнопку "The End"
 startBtn.addEventListener("click", () => {
-    startBtn.classList.add("started");
+    startBtn.classList.add("started"); // обводка плавно пропадает (transition на border-color/box-shadow)
     music.play().catch(() => {
         // если по какой-то причине не удалось — просто продолжаем без звука
     });
