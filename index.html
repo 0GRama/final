@@ -43,20 +43,16 @@ p{
 font-size:22px;
 line-height:1.8;
 margin:12px 0;
-white-space:pre-line;
 }
 
-#kitty{
+img{
 width:320px;
 border-radius:18px;
 margin-top:45px;
 box-shadow:0 0 30px rgba(255,255,255,.15);
 opacity:0;
-transition:opacity 2s ease;
-}
-
-#kitty.show{
-opacity:1;
+animation:fade 2s forwards;
+animation-delay:12s;
 }
 
 #footer{
@@ -68,6 +64,19 @@ opacity:.5;
 @keyframes fade{
 to{
 opacity:1;
+}
+}
+
+.cursor{
+display:inline-block;
+width:10px;
+background:white;
+animation:blink .8s infinite;
+}
+
+@keyframes blink{
+50%{
+opacity:0;
 }
 }
 
@@ -83,48 +92,50 @@ opacity:1;
 
 <p id="text"></p>
 
+<img src="IPC_2026-05-21.19.09.03.1320.jpg">
+
 <div id="footer">
+
 Love, Ramil
+
 </div>
 
 </div>
 
 <script>
 
-const message = `Thank you for solving this puzzle.
+const message=`Thank you for solving this puzzle.
+
 If you're reading this, it means you've made it all the way to the end.
+
 I hope this little adventure was enjoyable and worth your time.
+
 There are no more ciphers, riddles, or hidden clues left to find.
+
 You've discovered everything there was to discover.
+
 Thank you for being part of this little adventure.
+
 As a small token of my appreciation, here's a photo of my kitten.
 `;
 
-let i = 0;
+let i=0;
 
 function type(){
-    if(i < message.length){
-        document.getElementById("text").innerHTML += message[i];
-        i++;
-        setTimeout(type, 35);
-    } else {
-        showKitten();
-    }
+
+if(i<message.length){
+
+document.getElementById("text").innerHTML+=message.charAt(i);
+
+i++;
+
+setTimeout(type,35);
+
 }
 
-function showKitten(){
-    const img = document.createElement("img");
-    img.src = "IPC_2026-05-21.19.09.03.1320.jpg";
-    img.id = "kitty";
-
-    document.getElementById("container").appendChild(img);
-
-    setTimeout(() => {
-        img.classList.add("show");
-    }, 200);
 }
 
-setTimeout(type, 2500);
+setTimeout(type,2500);
 
 </script>
 
