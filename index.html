@@ -82,18 +82,6 @@ transition:opacity 3s ease;
 #footer.show{
 opacity:.5;
 }
-/* 🔈 подсказка о звуке */
-#soundHint{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-font-size:13px;
-opacity:.6;
-letter-spacing:1px;
-cursor:pointer;
-display:none;
-}
 @keyframes fade{
 to{
 opacity:1;
@@ -109,10 +97,8 @@ opacity:1;
 <div id="footer">Love, Ramil</div>
 </div>
 
-<div id="soundHint">🔈 нажмите, чтобы включить звук</div>
-
 <!-- 🎵 фоновая музыка -->
-<audio id="bgMusic" src="ost%20code.wav" loop></audio>
+<audio id="bgMusic" src="ost%20code.wav" autoplay loop></audio>
 
 <script>
 const lines = [
@@ -129,25 +115,21 @@ const textEl = document.getElementById("text");
 
 // 🎵 запуск музыки с обходом блокировки автовоспроизведения браузером
 const music = document.getElementById("bgMusic");
-const hint = document.getElementById("soundHint");
 music.volume = 0.6;
-
 function tryPlayMusic(){
     const playPromise = music.play();
     if(playPromise !== undefined){
-        playPromise.then(() => {
-            hint.style.display = "none";
-        }).catch(() => {
-            // браузер заблокировал автозапуск — покажем подсказку
-            hint.style.display = "block";
-
-            const events = ["click", "keydown", "touchstart", "scroll", "mousemove"];
+        playPromise.catch(() => {
+            // браузер заблокировал автозапуск — запустим при первом клике/касании
             const startOnInteraction = () => {
                 music.play();
-                hint.style.display = "none";
-                events.forEach(e => document.removeEventListener(e, startOnInteraction));
+                document.removeEventListener("click", startOnInteraction);
+                document.removeEventListener("keydown", startOnInteraction);
+                document.removeEventListener("touchstart", startOnInteraction);
             };
-            events.forEach(e => document.addEventListener(e, startOnInteraction, { once: true }));
+            document.addEventListener("click", startOnInteraction);
+            document.addEventListener("keydown", startOnInteraction);
+            document.addEventListener("touchstart", startOnInteraction);
         });
     }
 }
