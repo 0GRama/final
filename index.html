@@ -140,7 +140,8 @@ music.volume = 0.6;
 
 // 🚀 экран — это одна большая кнопка. При нажатии музыка стартует
 // первой же строкой (минимальная задержка), затем гаснет рамка,
-// появляется надпись "The End" и запускается анимация текста
+// появляется надпись "The End" и запускается анимация текста.
+// Тайминг подобран так, чтобы фото котёнка появлялось на 29-й секунде.
 screenBtn.addEventListener("click", () => {
     music.play().catch(() => {
         // если по какой-то причине не удалось — просто продолжаем без звука
@@ -149,7 +150,7 @@ screenBtn.addEventListener("click", () => {
     setTimeout(() => {
         heading.classList.add("show"); // появляется надпись The End
     }, 300);
-    setTimeout(() => showLines(0), 2100);
+    setTimeout(() => showLines(0), 4000);
 }, { once: true });
 
 function showLines(index){
@@ -177,7 +178,7 @@ function showFinal(){
     setTimeout(() => {
         imageBox.classList.add("show");
     }, 50);
-    // само фото проявляется чуть позже, пока раскрывается зона
+    // само фото проявляется чуть позже, пока раскрывается зона (на 29-й секунде от клика)
     setTimeout(() => {
         img.classList.add("show");
     }, 900);
